@@ -1,0 +1,132 @@
+---
+title: "cardio"
+author: "Kevien Otieno"
+date: "2023-10-30"
+output: html_document
+---
+
+
+```{r}
+pacman::p_load(tidyverse, dplyr, tidyr, haven, janitor, lubridate)
+```
+
+```{r}
+cardio = read.csv("cardio_train.csv",
+                  sep =";")
+```
+
+
+```{r}
+str(cardio)
+```
+
+
+```{r}
+cardio = cardio %>% 
+  mutate(
+  gender = 
+    case_when(gender == 1~"Men",
+              gender == 2 ~ "Women"),
+  cholesterol = 
+    case_when(cholesterol == 1~ "normal",
+              cholesterol == 2~ "above normal",
+              cholesterol == 3~ "well above normal"),
+  gluc=
+    case_when(gluc == 1~ "normal",
+              gluc == 2~ "above normal",
+              gluc == 3~ "well above normal")
+)
+
+```
+```{r}
+View(cardio)
+```
+
+```{r}
+cardio$height <- cardio$height*0.01
+cardio$bmi <- ceiling(cardio$weight/(cardio$height)^2)
+```
+```{r}
+cardio$bmi_categorised <-ifelse(cardio$bmi < 18.5, "underweight",
+                                  ifelse(cardio$bmi >= 18.5 & cardio$bmi <= 25, "normal", 
+                                         ifelse(cardio$bmi > 25 & cardio$bmi <= 30, "overweight", 
+                                                ifelse(cardio$bmi > 30, "obese", NA)))) 
+cardio$bmi_categorised <- as.factor(cardio$bmi_categorised)
+
+```
+
+
+
+
+```{r}
+cardio = cardio %>% select(-id )
+```
+
+```{r}
+
+
+# Assuming 'cardio' is the name of your dataset
+
+# Select only numeric variables for scaling
+numeric_data <- cardio %>% select(ap_hi)
+
+# Apply min-max scaling to the numeric variables
+scaled_numeric <- scale(numeric_data)
+
+# Combine scaled numeric variables with non-numeric variables
+scaled_data <- cbind(scaled_numeric, cardio %>% select(-ap_hi))
+
+# View the first few rows of the scaled dataset
+head(scaled_data)
+View(scaled_data)
+```
+
+
+
+```{r}
+scaled_data = scaled_data %>% 
+  filter(ap_hi >= 0)
+```
+
+
+```{r}
+
+scaled_data <- scaled_data %>%
+  mutate(cholesterol = factor(cholesterol),gluc = factor(gluc),smoke = factor(smoke),alco = factor(alco),active = factor(active),gender = factor(gender), cardio = factor(cardio), height = height * 0.01,age = round(age/365,0))
+
+```
+
+```{r}
+
+
+# Split the data into training and testing sets
+set.seed(123)  # Set seed for reproducibility
+train_indices <- sample(1:nrow(scaled_data), 0.8 * nrow(scaled_data))  # 80% for training
+train_data <- scaled_data[train_indices, ]
+test_data <- scaled_data[-train_indices, ]
+summary(scaled_data)
+# Train the logistic regression model
+model <- glm(cardio ~ ., data = train_data, family = binomial)
+
+final_model <- step(model, direction = "both")
+
+
+
+# Make predictions on the test set
+predicted_classes <- predict(final_model, newdata = test_data, type = "response")
+predicted_classes <- ifelse(predicted_classes > 0.5, 1, 0)  # Considering a threshold of 0.5 for binary classification
+
+# Calculate accuracy
+actual_classes <- test_data$cardio
+accuracy <- mean(predicted_classes == actual_classes)
+cat("Accuracy of the logistic regression model: ", accuracy * 100, "%\n")
+
+```
+```{r}
+# Assume 'fitted_model' is the variable containing your trained logistic regression model
+# Save the model to an RDS file
+saveRDS(final_model, "my_logistic_model.rds")
+```
+
+
+
