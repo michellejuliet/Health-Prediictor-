@@ -40,7 +40,7 @@ function DataFields() {
   console.log(formData);
 
   // Send a POST request to the server with JSON data
-  const response = await fetch("http://192.168.1.12:5000/api/patients", {
+  const response = await fetch("http://127.0.0.1:5000/api/patients", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -86,7 +86,7 @@ function DataFields() {
     // Here, you can send the data to your API for saving it to a database
     // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint
     try {
-      const response = await fetch("http://192.168.1.12:5000/api/patients", {
+      const response = await fetch("http://127.0.0.1:5000/api/patients", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
