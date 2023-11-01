@@ -1,0 +1,1 @@
+{obj.__class__.name__}.{obj.id},"[Patient] (16a44f94-03a6-44e6-8888-e339e522970c) {'id': '16a44f94-03a6-44e6-8888-e339e522970c', 'created_at': datetime.datetime(2023, 10, 31, 0, 28, 49, 868214), 'updated_at': datetime.datetime(2023, 10, 31, 0, 28, 49, 868694), 'first_name': 'John', 'email': 'airbnb2@mail.com'}"
