@@ -14,21 +14,16 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DATETIME
 from os import getenv
 
-storage_type = getenv("HBNB_TYPE_STORAGE")
-
-if storage_type == 'db':
-    Base = declarative_base()
-else:
-    Base = object
+Base = declarative_base()
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
+
 class BaseModel:
 
-    if models.storage_t == "db":
-        id = Column(String(60), primary_key=True)
-        created_at = Column(DATETIME, default=datetime.utcnow)
-        updated_at = Column(DATETIME, default=datetime.utcnow)
+    id = Column(String(60), primary_key=True)
+    created_at = Column(DATETIME, default=datetime.utcnow)
+    updated_at = Column(DATETIME, default=datetime.utcnow)
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""

@@ -4,7 +4,7 @@ from os import getenv
 from models.base_model import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy import text
+# from sqlalchemy import text
 from models.main_patient_data import Patient
 import models
 
@@ -16,36 +16,21 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        HBNB_MYSQL_USER = 'admin_dev'
-        HBNB_MYSQL_PWD = 'Pwd.admin1dev'
-        # HBNB_MYSQL_PWD = HBNB_MYSQL_PWD
-        # HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
-        HBNB_MYSQL_HOST = 'localhost'
-        HBNB_MYSQL_DB = 'patient_dev_db'
-        HBNB_ENV = 'test'
-
-        # self.__engine = create_engine({
-        #     'engine': 'mysql+mysqldb',
-        #     'user': HBNB_MYSQL_USER,
-        #     'password': HBNB_MYSQL_PWD,
-        #     'host': HBNB_MYSQL_HOST,
-        #     'database': HBNB_MYSQL_DB,
-        #     'pool_pre_ping': True
-        # })
+        # HBNB_MYSQL_USER = 'admin_dev'
+        # HBNB_MYSQL_PWD = 'Pwd.admin1dev'
+        # # HBNB_MYSQL_PWD = HBNB_MYSQL_PWD
+        # # HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+        # HBNB_MYSQL_HOST = 'localhost'
+        # HBNB_MYSQL_DB = 'patient_dev_db'
+        # HBNB_ENV = 'test'
         # self.__engine = create_engine(
-        # 'mysql+mysqldb://' +
-        # HBNB_MYSQL_USER +
-        # ':' +
-        # HBNB_MYSQL_PWD +
-        # '@' +
-        # HBNB_MYSQL_HOST +
-        # '/' +
-        # HBNB_MYSQL_DB)
+        #     f'mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}')
         self.__engine = create_engine(
-            f'mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}')
+            'mysql+mysqldb://admin_dev:Pwd.admin1dev@localhost/patient_dev_db',
+            pool_pre_ping=True)
 
         # if HBNB_ENV == 'test':
-            # Base.metadata.drop_all(bind=self.__engine)
+        # Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """query on the current database session"""
@@ -77,7 +62,6 @@ class DBStorage:
 
     def close(self):
         """call remove() method on the private session attribute"""
-        # self.__session.remove()
         self.__session.close()
 
     def get(self, cls, id):

@@ -7,20 +7,11 @@ This module is an API that performs various operations on the database.
 from flask import Flask, jsonify, request, make_response, abort
 from models import storage
 from models.main_patient_data import Patient
-from models.base_model import BaseModel
 from flask_cors import CORS
-from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 CORS(app)
 app.url_map.strict_slashes = False
-
-app.config['HBNB_MYSQL_USER'] = 'admin_dev'
-app.config['HBNB_MYSQL_PWD'] = 'Pwd.admin1dev'
-app.config['HBNB_MYSQL_HOST'] = 'localhost'
-app.config['HBNB_MYSQL_DB'] = 'patient_dev_db'
-app.config['HBNB_TYPE_STORAGE'] = 'db'
-mysql = MySQL(app)
 
 
 @app.route('/api/status', methods=['GET'], strict_slashes=False)
@@ -44,11 +35,12 @@ def number_objects():
 @app.route('/api/patients', methods=['GET'])
 def get_all_patients():
     """Retrieves all patients"""
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM main_patient_data")
-    patients = cursor.fetchall()
-    cursor.close()
-    return jsonify(patients)
+    all_patients = storage.all(Patient).values()
+    patients_lst = []
+    for patient in all_patients:
+        patients_lst.append(patient.to_dict())
+
+    return jsonify(patients_lst)
 
 
 @app.route('/api/patients/<patient_id>', methods=['GET'])
@@ -70,8 +62,6 @@ def add_patient():
 
     if 'first_name' not in request.get_json():
         abort(400, description="Missing name")
-    # cursor.execute(''' INSERT INTO main_patient_data VALUES(%s, %s)''', (first_name, age))
-
     data = request.get_json()
     instance = Patient(**data)
     instance.save()
@@ -117,7 +107,6 @@ def get_mldata(patient_id):
         'blood_pressure', 'cholesterol', 'glucose',
         'smoke', 'alcohol', 'active',
     ]
-
     # Extract data for the specified keys
     extracted_data = {key: getattr(patient, key, '')
                       for key in keys_to_extract}
