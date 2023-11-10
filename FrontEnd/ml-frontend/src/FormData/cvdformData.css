@@ -1,0 +1,134 @@
+/* Add styles for the static-data div */
+.cvd-page {
+  text-align: center;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  width: auto;
+  /* background-color: #ffffff; */
+}
+
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+} */
+
+/* App.css */
+.FormData {
+  text-align: center;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+}
+
+.form-group {
+  width: 30%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* text-align: center; */
+  align-items: center;
+}
+
+/* Adjust the overall form layout */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* This will space out your form groups */
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Same width for input and select elements */
+input, select {
+  width: 75%; /* Reduced width */
+  max-width: 250px; /* Max width for larger screens */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+/* 
+button {
+  margin: 10px;
+   background-color: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #555;
+} */
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .form-group {
+    width: 100%;
+  }
+  input, select, button {
+    width: 90%; /* Increase width for smaller screens */
+  }
+} 
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Center buttons horizontally */
+  align-items: center;
+  margin: 10px;
+  gap: 20px; /* Add space between buttons */
+}
+
+button {
+  margin: 0; /* Remove default margin */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
+  /* Distinct colors for each button */
+}
+
+button[type="button"] { /* Back button */
+  /* background-color: #84A4FC; */
+  background-color: transparent;
+  border: 1px solid #84A4FC;
+}
+
+button[type="button"]:hover {
+  background-color: #6b717d;
+  /* background-color: transparent; */
+  transform: translateY(-2px); /* Slight raise effect */
+}
+
+button[type="submit"] { /* Submit button */
+  background-color: #84A4FC !important;
+}
+
+button[type="submit"]:hover {
+  background-color: #6b717d; /* Darker shade on hover */
+  transform: translateY(-2px); /* Slight raise effect */
+}
+
+@media (max-width: 768px) {
+  .buttons {
+    flex-direction: column; /* Stack buttons vertically on small screens */
+    gap: 10px; /* Reduce gap on small screens */
+  }
+}

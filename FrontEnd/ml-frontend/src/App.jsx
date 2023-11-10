@@ -1,270 +1,61 @@
 // import { useState } from "react";
 import "./App.css";
-import DataFields from "./FormData/formData";
+import DataFields from "./FormData/cvdformData";
+import UserProfile from "./FormData/FirstPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import UserData from "./FormData/users";
+// import PatientDataProvider from './PatientDataProvider';
+// import {
+//   ClerkProvider,
+//   SignedIn,
+//   SignedOut,
+//   // UserButton,
+//   // useUser,
+//   RedirectToSignIn,
+// } from "@clerk/clerk-react";
+// import.meta.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+// import process from "process";
+ 
 
 function App() {
-  // const [formData, setFormData] = useState({
-  //   first_name: "",
-  //   last_name: "",
-  //   email: "",
-  //   phone_number: "",
-  //   Age: "",
-  //   address: "",
-  //   gender: "",
-  //   height: "",
-  //   weight: "",
-  //   alcohol: "",
-  //   smoking: "",
-  //   blood_pressure: "",
-  //   BMI: "",
-  //   BMI_category: "",
-  //   activity_level: "",
-  //   glucose_level: "",
-  //   cholesterol_level: "",
-  // });
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
-
-//  const handleSubmit = async (e) => {
-//   e.preventDefault();
-
-//   // Log the form data for debugging (optional)
-//   console.log(formData);
-
-//   // Send a POST request to the server with JSON data
-//   const response = await fetch("http://192.168.1.12:5000/api/patients", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(formData), // Convert form data to JSON
-//   });
-
-//   // Handle the response as needed (e.g., check for success or errors)
-//   if (response.ok) {
-//     // Successful response (status code 2xx)
-//     const responseData = await response.json();
-//     console.log("Data successfully posted:", responseData);
-//   } else {
-//     // Handle errors (status code is not 2xx)
-//     console.error("Error posting data:", response.statusText);
-//   }
-
-//   // Clear the form fields after submission
-//   setFormData({
-//     first_name: "",
-//     last_name: "",
-//     email: "",
-//     phone_number: "",
-//     Age: "",
-//     address: "",
-//     gender: "",
-//     height: "",
-//     weight: "",
-//     alcohol: "",
-//     smoking: "",
-//     blood_pressure: "",
-//     BMI: "",
-//     BMI_category: "",
-//     activity_level: "",
-//     glucose_level: "",
-//     cholesterol_level: "",
-//   });
-// };
-
-
-
   return (
     <div className="App">
-      {/* <h1>Patient Information Form</h1> */}
-      {/* <form>
-        <div className="form-group">
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="first_name"
-            value={formData.first_name}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Gender:</label>
-          <input
-            type="text"
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Age:</label>
-          <input
-            type="number"
-            name="Age"
-            value={formData.Age}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Phone number:</label>
-          <input
-            type="number"
-            name="phone_number"
-            value={formData.phone_number}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Address:</label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Height:</label>
-          <input
-            type="text"  // const [formData, setFormData] = useState({
-  //   first_name: "",
-  //   last_name: "",
-  //   email: "",
-  //   phone_number: "",
-  //   Age: "",
-  //   address: "",
-  //   gender: "",
-  //   height: "",
-  //   weight: "",
-  //   alcohol: "",
-  //   smoking: "",
-  //   blood_pressure: "",
-  //   BMI: "",
-  //   BMI_category: "",
-  //   activity_level: "",
-  //   glucose_level: "",
-  //   cholesterol_level: "",
-  // });
-            name="height"
-            value={formData.height}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>Weight:</label>
-          <input
-            type="text"
-            name="weight"
-            value={formData.weight}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>Alcohol level:</label>
-          <input
-            type="text"
-            name="alcohol"
-            value={formData.alcohol}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>Smoking level:</label>
-          <input
-            type="text"
-            name="smoking"
-            value={formData.smoking}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>Blood Pressure level:</label>
-          <input
-            type="text"
-            name="blood_pressure"
-            value={formData.blood_pressure}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>BMI:</label>
-          <input
-            type="text"
-            name="BMI"
-            value={formData.BMI}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>BMI Category:</label>
-          <input
-            type="text"
-            name="BMI_category"
-            value={formData.BMI_category}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>Activity level:</label>
-          <input
-            type="text"
-            name="activity_level"
-            value={formData.activity_level}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>Glucose Level:</label>
-          <input
-            type="text"
-            name="glucose_level"
-            value={formData.glucose_level}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Cholestrol level:</label>
-          <input
-            type="text"
-            name="cholesterol_level"
-            value={formData.cholesterol_level}
-            onChange={handleChange}
-          />
-        </div>
-
-        <button type="submit" onClick={handleSubmit}>Submit</button>
-       </form>  */}
-        <DataFields />
-        </div>
+      <Router>
+        <Routes>
+            <Route path='/' element={<UserData />}/>
+            <Route path='cvd-table' element={<DataFields /> }/>
+            <Route path='profile/:id' element={<UserProfile /> }/>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
+// const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+// const clerkPubKey ="pk_test_bWFzc2l2ZS1nb2JsaW4tNjUuY2xlcmsuYWNjb3VudHMuZGV2JA";
+// console.log(clerkPubKey);
 
+// if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
+//   throw "Missing Publishable Key"
+// }
+ 
+ 
+// function App() {
+//   return (
+//     <ClerkProvider publishableKey={clerkPubKey}>
+//       <SignedIn>
+//         <MainPage />
+//           <Router>
+//             <Routes>
+//               <Route path='cvd-table' element={<DataFields /> }/>
+//             </Routes> 
+//           </Router>
+//       </SignedIn>
+//       <SignedOut>
+//         <RedirectToSignIn />
+//       </SignedOut>
+//     </ClerkProvider>
+//   );
+// }
+ 
 export default App;

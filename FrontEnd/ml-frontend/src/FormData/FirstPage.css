@@ -1,0 +1,136 @@
+.user-profile {
+  display: flex;
+  flex-direction: column-reverse; /* Stacks sidebar below content on small screens */
+  color: black;
+  position: relative;
+  /* background-color: #3c3f51; */
+
+}
+
+.sidebar {
+  /* padding-top: 5%; */
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: black;
+    /* box-shadow: ; */
+    position: fixed;
+    height: 100vh;
+    width: 20%;
+}
+
+Avatar{
+    object-fit: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.sidebar button{
+  /* margin-bottom: 1rem; */
+  background-color: transparent;
+    border: none;
+    color: black;
+}
+
+.sidebar button:hover{
+  color: #6b717d;
+}
+
+.general-info{
+    padding-left: 3rem;
+    padding-top: 5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
+
+.profile-content{
+    left: 20%;
+    position: relative;
+    width: 80%;
+    float: right;
+    padding-left: 100px;
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+  }
+
+.general-info-text{
+    font-size: 1.0rem;
+    font-weight: 300;
+
+}
+
+.form{
+  padding-top: 5%;
+  /* display: flex; */
+     display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-gap: 1rem; */
+  /* flex-wrap: wrap; */
+  justify-content: space-around; /* This will space out your form groups */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+/* Same width for input and select elements */
+input, select {
+  width: 100%; /* Reduced width */
+  max-width: 250px; /* Max width for larger screens */
+  padding: 10px;
+  text-align: center;
+  background-color: transparent;
+  color: #000;
+  /* border: none; */
+}
+
+.healthinfo-section{
+  display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+}
+
+.healthinfo-section > div {
+  display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+    align-self: start;
+    padding-left: 2rem;
+}
+
+h2{
+  text-align: left;
+  padding: 2rem;
+  margin: 0;
+}
+/* Style for active buttons (raised appearance and background color) */
+.sidebar button.active {
+  background-color: #84A4FC; /* Background color when active */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+
+/* Responsive styles */
+@media (min-width: 768px) {
+  .user-profile {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    width: 30%; /* Adjust width as needed */
+  }
+
+  .profile-content {
+    width: 70%; /* Adjust width as needed */
+  }
+}
+
+/* You can add more styles and media queries to fine-tune the responsiveness */

@@ -8,7 +8,7 @@ It stores patient data in the database.
 from models.base_model import BaseModel, Base
 import uuid
 import models
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer
 from os import getenv
 # from models.specific_patient_data import PatientData
 
@@ -28,14 +28,16 @@ class Patient(BaseModel, Base):
     gender = Column(String(128), nullable=True)
     height = Column(String(128), nullable=True)
     weight = Column(String(128), nullable=True)
-    alcohol = Column(String(128), nullable=True)
-    smoking = Column(String(128), nullable=True)
-    blood_pressure = Column(String(128), nullable=True)
+    alcohol = Column(Integer, nullable=True)
+    smoking = Column(Integer, nullable=True)
+    diastolic_bp = Column(String(128), nullable=True)
+    systolic_bp = Column(String(128), nullable=True)
     BMI = Column(String(128), nullable=True)
     BMI_category = Column(String(128), nullable=True)
-    activity_level = Column(String(128), nullable=True)
-    glucose_level = Column(String(128), nullable=True)
-    cholesterol_level = Column(String(128), nullable=True)
+    glucose_level = Column(Integer, nullable=True)
+    cholesterol_level = Column(Integer, nullable=True)
+    activity_level = Column(Integer, nullable=True)
+    cardio = Column(Integer, nullable=True)
 
     # else:
     #     patient_id = str(uuid.uuid4())
@@ -78,7 +80,9 @@ class Patient(BaseModel, Base):
             'weight': self.weight,
             'alcohol': self.alcohol,
             'smoking': self.smoking,
-            'blood_pressure': self.blood_pressure,
+            # 'blood_pressure': self.blood_pressure,
+            'diastolic_bp': self.diastolic_bp,
+            'systolic_bp': self.systolic_bp,
             'BMI': self.BMI,
             'BMI_category': self.BMI_category,
             'activity_level': self.activity_level,

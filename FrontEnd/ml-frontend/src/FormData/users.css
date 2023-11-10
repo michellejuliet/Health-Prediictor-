@@ -1,0 +1,20 @@
+/* .navbar-toggler {
+  background-color: #6c757d;
+} */
+button[type="button"] { /* Submit button */
+  background-color: #1463F3 !important;
+  /* background-color: #84A4FC; */
+  color: white;
+}
+
+
+.navbar-toggler:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px); /* Slight raise effect */
+}
+
+/* a{
+    color: #646cff;
+    text-decoration: inherit;
+    background-color: transparent;
+} */

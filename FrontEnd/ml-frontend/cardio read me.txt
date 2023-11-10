@@ -1,0 +1,20 @@
+This dataset contains 70000 observations(rows) and 13 variables(columns)
+The column ID has been removed due to not adding value to the analysis
+age            : takes numerical values
+gender         : takes values as 1 for female and 2 for male
+height         : height is in metres
+weight         : weight is in kilogram
+ap_hi          : Systolic blood pressure 
+ap_lo          : Diastolic blood pressure
+cholesterol    : a categorical variable grouped into ranges  "normal" "above normal" "well above normal" 
+gluc           : a categorical variable grouped into ranges "normal" "above normal" "well above normal"
+smoke          : takes value 1 for a smoker and 0 for a non smoker
+alco           : Takes value 0 for drinks alcohol and 1 for a non drinker
+active         : Does the patient exercise 0 for no 1 for yes
+cardio         : Has a cardiovascular disease 0 for no 1 for yes
+bmi            : numerical value calculated from weight/height^2
+bmi_categorised : a categorical variable groups Bmi into ranges  "underweight" is under 18.5 ,
+                                   18.5 <="normal" <=25, 
+                                         25 > "overweight"  <= 30, "overweight"
+						Obese > 30
+The dataset should not have negative values.

@@ -8,6 +8,7 @@ from flask import Flask, jsonify, request, make_response, abort
 from models import storage
 from models.main_patient_data import Patient
 from flask_cors import CORS
+import logging
 
 app = Flask(__name__)
 CORS(app)
@@ -35,13 +36,32 @@ def number_objects():
 @app.route('/api/patients', methods=['GET'])
 def get_all_patients():
     """Retrieves all patients"""
-    all_patients = storage.all(Patient).values()
-    patients_lst = []
-    for patient in all_patients:
-        patients_lst.append(patient.to_dict())
+    # all_patients = storage.all(Patient).values()
 
-    return jsonify(patients_lst)
+    # patients_lst = []
+    # for patient in all_patients:
+    #     patients_lst.append(patient.to_dict())
 
+    # return jsonify(patients_lst)
+    try:
+        # Retrieve all patients
+        all_patients = storage.all(Patient).values()
+
+        patients_lst = []
+        for patient in all_patients:
+            patients_lst.append(patient.to_dict())
+
+        # Commit and close the SQLAlchemy session
+        # storage.save()
+        # storage.close()
+
+        return jsonify(patients_lst)
+    except Exception as e:
+        # Properly handle exceptions and log them
+        logging.error(f"Error in get_all_patients: {e}")
+        # Rollback the transaction if an exception occurs
+        storage.rollback()
+        return make_response(jsonify({'error': 'An error occurred'}), 500)
 
 @app.route('/api/patients/<patient_id>', methods=['GET'])
 def get_patient(patient_id):
@@ -65,6 +85,11 @@ def add_patient():
     data = request.get_json()
     instance = Patient(**data)
     instance.save()
+    # storage.save()
+    # storage.commit()
+    # instance.close()
+    # close session to avoid mysql timeout
+    # storage.close()
     return make_response(jsonify(instance.to_dict()), 200)
 
 
@@ -80,6 +105,9 @@ def update_patient(patient_id):
     for key, value in data.items():
         setattr(patient, key, value)
     patient.save()
+    # storage.save()
+    # storage.commit()
+    # storage.close()
     return jsonify(patient.to_dict())
 
 
@@ -91,7 +119,9 @@ def delete_patient(patient_id):
         return make_response(jsonify({'error': 'Not found'}), 404)
     patient.delete()
     storage.save()
-    return make_response(jsonify({}), 200)
+    # storage.commit()
+    # storage.close()
+    return make_response(jsonify({'success': 'Successfully deleted'}), 200)
 
 
 @app.route('/api/patients/ml/<patient_id>', methods=['GET'])

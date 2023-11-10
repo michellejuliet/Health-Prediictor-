@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 # from sqlalchemy import text
 from models.main_patient_data import Patient
 import models
+import logging
 
 classes = {"Patient": Patient}
 
@@ -47,7 +48,18 @@ class DBStorage:
         self.__session.add(obj)
 
     def save(self):
-        self.__session.commit()
+        try:
+            self.__session.commit()  # Commit the transaction
+        except Exception as e:
+            self.__session.rollback()  # Roll back the transaction in case of an error
+            raise e
+
+    def rollback(self):
+        try:
+            self.__session.rollback()
+        except Exception as e:
+            # Log the error
+            logging.error(f"Error during database rollback: {e}")
 
     def delete(self, obj=None):
         if obj is not None:
