@@ -1,17 +1,28 @@
 /* .navbar-toggler {
   background-color: #6c757d;
 } */
+
+h1{
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #3c3f51;
+  text-align: center;
+}
 button[type="button"] { /* Submit button */
-  background-color: #1463F3 !important;
+  background-color: #e8f0fc !important;
   /* background-color: #84A4FC; */
-  color: white;
+  color: black;
 }
 
 
 .navbar-toggler:hover {
-  background-color: #5a6268;
+  background-color: #6c757d;
   transform: translateY(-2px); /* Slight raise effect */
 }
+
+
 
 /* a{
     color: #646cff;

@@ -1,17 +1,12 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  /* padding: 2rem; */
-  text-align: center;
+  /* max-width: 1280px; */
+  margin: 0;
+  /* text-align: center; */
   /* background-color: #3c3f51; */
-  background-color: white;
-  /* height: 100vh; */
+  /* background-color: white; */
+  /* background-color: #93B5C3; */
+  height: 100vh;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
  } 
-
-/* App.css */
-/* .App {
-  text-align: center;
-  margin: 20px;
-  font-family: Arial, sans-serif;
-  width: auto;
-}  */
+ 

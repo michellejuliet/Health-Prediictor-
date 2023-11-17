@@ -11,7 +11,7 @@ let headers = {
   "Cache-Control": "no-cache"
 };
 
-export default function UserData() {
+export default function PatientData() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -40,7 +40,7 @@ export default function UserData() {
   // Function to handle row click
   const handleRowClick = (row) => {
     // Navigate to the user's profile page with the user's ID in the URL
-    navigate(`/profile/${row.id}`);
+    navigate(`/health-table/${row.id}`);
   };
 
 

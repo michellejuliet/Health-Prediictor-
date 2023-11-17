@@ -5,11 +5,14 @@ body {
   padding: 0;
   font-family: 'Quicksand', sans-serif;
   font-size: 16px;
+  background-color: #F9FFFF ;
+  
 }
 
 .rdt_TableRow:nth-child(even) {
   /* background-color: #d6e4fd; */
-  background-color: #e8f0fc;
+  background-color: #F9FFFF ;
+  /* background-color: ; */
 }
 
 .rdt_Table{

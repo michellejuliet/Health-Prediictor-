@@ -4,6 +4,11 @@ import DataFields from "./FormData/cvdformData";
 import UserProfile from "./FormData/FirstPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserData from "./FormData/users";
+import Home from "../src/landingPage/Home";
+import HealthData from "./FormData/health";
+import PatientData from "./FormData/patientInfo";
+import PredictionPage from "./FinalDisplay/prediction";
+
 // import PatientDataProvider from './PatientDataProvider';
 // import {
 //   ClerkProvider,
@@ -22,9 +27,13 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-            <Route path='/' element={<UserData />}/>
+            <Route path='/' element={<Home />}/>
+            <Route path='patients' element={<UserData /> }/>
             <Route path='cvd-table' element={<DataFields /> }/>
+            <Route path='health-table/:id' element={<HealthData /> }/>
             <Route path='profile/:id' element={<UserProfile /> }/>
+            <Route path='health-table' element={<PatientData /> }/>
+            <Route path='prediction/:id' element={<PredictionPage /> }/>
         </Routes>
       </Router>
     </div>

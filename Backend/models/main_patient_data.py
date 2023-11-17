@@ -12,8 +12,6 @@ from sqlalchemy import Column, String, Integer
 from os import getenv
 # from models.specific_patient_data import PatientData
 
-# storage_type = getenv("HBNB_TYPE_STORAGE")
-
 
 class Patient(BaseModel, Base):
     """ Patient class that stores patient data in the database"""
@@ -22,42 +20,22 @@ class Patient(BaseModel, Base):
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
     email = Column(String(128), nullable=True)
-    phone_number = Column(String(128), nullable=True)
-    Age = Column(String(128), nullable=True)
+    phone_number = Column(Integer, nullable=True)
+    Age = Column(Integer, nullable=True)
     address = Column(String(128), nullable=True)
     gender = Column(String(128), nullable=True)
-    height = Column(String(128), nullable=True)
-    weight = Column(String(128), nullable=True)
+    height = Column(Integer, nullable=True)
+    weight = Column(Integer, nullable=True)
     alcohol = Column(Integer, nullable=True)
     smoking = Column(Integer, nullable=True)
-    diastolic_bp = Column(String(128), nullable=True)
-    systolic_bp = Column(String(128), nullable=True)
-    BMI = Column(String(128), nullable=True)
+    diastolic_bp = Column(Integer, nullable=True)
+    systolic_bp = Column(Integer, nullable=True)
+    BMI = Column(Integer, nullable=True)
     BMI_category = Column(String(128), nullable=True)
     glucose_level = Column(Integer, nullable=True)
     cholesterol_level = Column(Integer, nullable=True)
     activity_level = Column(Integer, nullable=True)
     cardio = Column(Integer, nullable=True)
-
-    # else:
-    #     patient_id = str(uuid.uuid4())
-    #     first_name = ""
-    #     last_name = ""
-    #     email = ""
-    #     phone_number = ""
-    #     Age = ""
-    #     address = ""
-    #     gender = ""
-    #     height = ""
-    #     weight = ""
-    #     alcohol = ""
-    #     smoking = ""
-    #     blood_pressure = ""
-    #     BMI = ""
-    #     BMI_category = ""
-    #     activity_level = ""
-    #     glucose_level = ""
-    #     cholesterol_level = ""
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
@@ -87,5 +65,6 @@ class Patient(BaseModel, Base):
             'BMI_category': self.BMI_category,
             'activity_level': self.activity_level,
             'glucose_level': self.glucose_level,
-            'cholesterol_level': self.cholesterol_level
+            'cholesterol_level': self.cholesterol_level,
+            'cardio': self.cardio
         }

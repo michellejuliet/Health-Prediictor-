@@ -116,7 +116,24 @@ h2{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.edit-save-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #1463f3;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px;
+  transition: background-color 0.3s;
+}
 
+.edit-save-btn.save-mode {
+  background-color: #84A4FC;
+}
+
+.edit-save-btn:hover {
+  background-color: #0a47a9; /* Darken the color on hover */
+}
 
 /* Responsive styles */
 @media (min-width: 768px) {

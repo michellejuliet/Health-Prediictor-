@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
 import './cvdformData.css';
+// import { useParams } from 'react-router-dom';
 
-const calculateBMI = (weight, height) => {
-  if (weight && height) {
-    const height_s = height / 100;
-    return (weight / (height_s * height_s)).toFixed(1);
-  } else {
-    return "";
-  }
-};
 
 function DataFields() {
   const [formData, setFormData] = useState({
@@ -18,140 +11,93 @@ function DataFields() {
     phone_number: "",
     Age: "",
     address: "",
-    gender: "",
-    height: "",
-    weight: "",
-    alcohol: "",
-    smoking: "",
-    // blood_pressure: "",
-    diastolic_bp: "",
-    systolic_bp: "",
-    BMI: "",
-    BMI_category: "",
-    activity_level: "",
-    glucose_level: "",
-    cholesterol_level: "",
+    // gender: "",
   });
+
+  //  const [hospitalId, setHospitalId] = useState(null);
+  // const id = useParams();
+
+  useEffect(() => {
+    // Fetch the hospital ID
+    fetch('http://127.0.0.1:5000/api/hospitals')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Hospital ID:', data.id);
+        // const id = data.id; // Replace with the actual path to the ID in your response data
+        // setHospitalId(id);
+      })
+      .catch(error => {
+        console.error('Error fetching hospital ID:', error);
+      });
+  }, []);
+
+ const postData = async () => {
+  // if (hospitalId) {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/api/5a675cb3-f1a0-41db-9dff-93f746f380c7/patients`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Include other headers as needed, such as Authorization
+        },
+        body: JSON.stringify(formData), // Send the formData as the request payload
+      });
+
+      // Check if the request was successful
+      if (response.ok) {
+        const data = await response.json();
+        // Handle the response data
+        console.log(data);
+
+        // Clear the form fields after successful submission
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          phone_number: "",
+          Age: "",
+          address: "",
+          // ... reset other fields as necessary
+        });
+
+        // Optionally, display a success message or navigate to another page
+        alert('Patient data submitted successfully!');
+      } else {
+        // If the server response was not ok, handle errors
+        console.error('Failed to submit patient data. Status:', response.status);
+        // Optionally, display an error message to the user
+        alert('Failed to submit patient data.');
+      }
+    } catch (error) {
+      console.error('Error posting patient data:', error);
+      // Optionally, display an error message to the user
+      alert('An error occurred while submitting patient data.');
+    }
+//   } else {
+//     alert('No hospital ID found. Please try again.');
+//   }
+};
+
+
+    const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
 
   // const [isSubmitButtonVisible, setSubmitButtonVisible] = useState(false);
 
-  const [isEmailValid, setIsEmailValid] = useState(true); // Initially, set email as valid
+  // const [isEmailValid, setIsEmailValid] = useState(true); // Initially, set email as valid
 
-  const validateEmail = (email) => {
-    // Regular expression for basic email validation
-    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailPattern.test(email);
-  };
-
-
-  const handleChange = (e) => {
-  const { name, value } = e.target;
-
-  if (name === "height" || name === "weight") {
-    const updatedData = {
-      ...formData,
-      [name]: value !== undefined ? value : "", 
-      BMI: calculateBMI(
-        name === "weight" ? value : formData.weight,
-        name === "height" ? value : formData.height
-      ),
-    };
-    setFormData(updatedData);
-
-    console.log("Updated Data: ", updatedData);
-
-    // Calculate and set the BMI category based on the updated BMI value
-    const bmi = calculateBMI(
-      name === "weight" ? value : formData.weight,
-      name === "height" ? value : formData.height
-    );
-
-    if (bmi) {
-      if (bmi < 18.5) {
-        updatedData.BMI_category = "underweight";
-      } else if (bmi >= 18.5 && bmi <= 25) {
-        updatedData.BMI_category = "normal";
-      } else if (bmi > 25 && bmi <= 30) {
-        updatedData.BMI_category = "overweight";
-      } else if (bmi > 30) {
-        updatedData.BMI_category = "obese";
-      }
-    }
-
-    if (name === "email") {
-      // Validate email
-      const isValid = validateEmail(value);
-      setIsEmailValid(isValid);
-    }
-
-    setFormData(updatedData);
-  } else {
-    setFormData({ ...formData, [name]: value });
-  }
-};
-
-  useEffect(() => {
-    // Recalculate BMI when height or weight changes
-    const { weight, height } = formData;
-    const bmi = calculateBMI(weight, height);
-    setFormData((prevData) => ({ ...prevData, BMI: bmi }));
-    // console.log("BMI:", bmi);
-    // console.log("BMI Category:", formData.BMI_category);
-    // console.log("height", formData.height);
-    // console.log("weight", weight);
-    // console.log("gender", formData.gender);
-  }, [formData.weight, formData.height]);
-
- const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  // Log the form data for debugging (optional)
-  console.log(formData);
-
-  // Send a POST request to the server with JSON data
-  const response = await fetch("http://127.0.0.1:5000/api/patients", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData), // Convert form data to JSON
-  });
-
-  // Handle the response as needed (e.g., check for success or errors)
-  if (response.ok) {
-    // Successful response (status code 2xx)
-    const responseData = await response.json();
-    console.log("Data successfully posted:", responseData);
-  } else {
-    // Handle errors (status code is not 2xx)
-    console.error("Error posting data:", response.statusText);
-  }
-
-  // Clear the form fields after submission
-  setFormData({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone_number: "",
-    Age: "",
-    address: "",
-    gender: "",
-    height: "",
-    weight: "",
-    alcohol: "",
-    smoking: "",
-    // blood_pressure: "",
-    diastolic_bp: "",
-    systolic_bp: "",
-    BMI: "",
-    BMI_category: "",
-    activity_level: "",
-    glucose_level: "",
-    cholesterol_level: "",
-  });
-};
+  // const validateEmail = (email) => {
+  //   // Regular expression for basic email validation
+  //   const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  //   return emailPattern.test(email);
+  // };
+  
  
-
 
   return (
       <div className="cvd-page">
@@ -184,21 +130,8 @@ function DataFields() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            style={{ borderColor: isEmailValid ? "green" : "red" }} // Change border color based on email validity
+            // style={{ borderColor: isEmailValid ? "green" : "red" }} // Change border color based on email validity
           />
-        </div>
-
-        <div className="form-group">
-          <label>Gender:</label>
-          <select
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-          >
-            <option value="Female">Female</option>
-            {/* <option value="2">Male</option> */}
-            <option value="Male">Male</option>
-          </select>
         </div>
 
         <div className="form-group">
@@ -243,142 +176,6 @@ function DataFields() {
           />
         </div>
 
-        <div className="form-group">
-          <label>Height (cms):</label>
-          <input
-            type="number" 
-            name="height"
-            value={formData.height}
-            onChange={handleChange}
-          />
-        </div>
-
-         <div className="form-group">
-          <label>Weight (kgs):</label>
-          <input
-            type="number"
-            name="weight"
-            value={formData.weight}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Systolic Blood Pressure (ap_hi):</label>
-          <input
-            type="number"
-            name="systolic_bp"
-            value={formData.systolic_bp}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Diastolic Blood Pressure (ap_lo):</label>
-          <input
-            type="number"
-            name="diastolic_bp"
-            value={formData.diastolic_bp}
-            onChange={handleChange}
-          />
-        </div>
-
-
-         <div className="form-group">
-          <label>BMI:</label>
-          <input
-            type="text"
-            name="BMI"
-            value={formData.BMI}
-            // onChange={handleChange}
-            readOnly // Make BMI input read-only
-          />
-        </div>
-
-         <div className="form-group">
-          <label>BMI Category:</label>
-          <input
-            type="text"
-            name="BMI_category"
-            value={formData.BMI_category}
-            // onChange={handleChange}
-            readOnly // Make BMI category input read-only
-          />
-        </div>
-
-        <div className="form-group">
-            <label>Alcohol level:</label>
-            <select
-              name="alcohol"
-              value={formData.alcohol}
-              onChange={handleChange}
-            >
-              <option value="0">Alcoholic</option>
-              <option value="1">Non-Alcoholic</option>
-            </select>
-        </div>
-
-         <div className="form-group">
-          <label>Activity level:</label>
-          <select
-            name="activity_level"
-            value={formData.activity_level}
-            onChange={handleChange}
-          >
-            <option value="0">Inactive</option>
-            <option value="1">Active</option>
-          </select>
-        </div>
-
-         <div className="form-group">
-          <label>Smoking level:</label>
-          <select
-            name="smoking"
-            value={formData.smoking}
-            onChange={handleChange}
-          >
-            <option value="0">Non-Smoker</option>
-            <option value="1">Smoker</option>
-          </select>
-        </div>
-
-         <div className="form-group">
-          <label>Glucose Level:</label>
-          <select
-            name="glucose_level"
-            value={formData.glucose_level}
-            onChange={handleChange}
-          >
-            <option value="0">Normal</option>
-            <option value="1">Above Normal</option>
-            <option value="2">Well Above Normal</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Cholestrol level:</label>
-          <select
-            name="cholesterol_level"
-            value={formData.cholesterol_level}
-            onChange={handleChange}
-          >
-            <option value="0">Normal</option>
-            <option value="1">Above Normal</option>
-            <option value="2">Well Above Normal</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Presence of CVD:</label>
-          <select
-            name="cardio"
-            value={formData.cardio}
-            onChange={handleChange}
-          >
-            <option value="0">Has no CVD</option>
-            <option value="1">Has CVD</option>
-          </select>
-        </div>
       </form>
       <br />
       <div className="buttons">
@@ -387,7 +184,7 @@ function DataFields() {
           Back
         </button>
         </a>
-       <button type="submit" onClick={handleSubmit}  >
+       <button type="submit" onClick={postData}  >
           Submit
         </button>
       </div>
